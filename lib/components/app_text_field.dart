@@ -36,6 +36,9 @@ final class AppTextField extends StatelessWidget {
           fontSize: 16,
         ),
         decoration:  InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.blueGrey),
+          ),
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.blueGrey)
           ),
