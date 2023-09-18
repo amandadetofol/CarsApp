@@ -1,4 +1,5 @@
-
+import 'package:cars/components/app_button.dart';
+import 'package:cars/components/app_text_field.dart';
 import 'package:cars/components/white_bold_text.dart';
 import 'package:flutter/material.dart';
 
@@ -29,34 +30,37 @@ final class LoginPage extends StatelessWidget {
           ListView(
           padding: EdgeInsets.all(16),
           children: [
-            _textField(
-              false, 
-              "Login", 
-              "Digite seu login",
-              tLogin,
-              (text) {
-                  if(text == ""){
-                    return "Campo obrigatório.";
-                  } else {
-                    return null;
-                  }
-                }
-              ),
-            _spacingBox(),
-            _textField(
-              true, 
-              "Senha",
-              "Digite sua senha",
-              tSenha,
-              (text) {
+            AppTextField(
+              shouldHideCharachters: true,
+               label: "E-mail", 
+               hint: "Digite seu e-mail", 
+               tController: tSenha, 
+               validator: (text) {
                   if(text == ""){
                     return "Campo obrigatório.";
                   }
                   return null;
-                }
-              ),
+                },
+               textInputType: TextInputType.emailAddress,
+               action: TextInputAction.next),
             _spacingBox(),
-            _button(),
+            AppTextField(
+              shouldHideCharachters: true,
+               label: "Senha", 
+               hint: "Digite sua senha", 
+               tController: tSenha, 
+               validator: (text) {
+                  if(text == ""){
+                    return "Campo obrigatório.";
+                  }
+                  return null;
+                },
+               textInputType: TextInputType.number,
+               action: TextInputAction.next),
+            _spacingBox(),
+            AppButton(text: "Entar", onTap: (){
+              _loginTap();
+            }),
           ],
         )
       );
@@ -66,53 +70,6 @@ final class LoginPage extends StatelessWidget {
       return const SizedBox(height: 16);
     }
 
-    Widget _textField(
-      bool shouldHideCharachters, 
-      String label, 
-      String hint, 
-      TextEditingController tController,
-      FormFieldValidator<String> validator){
-       return TextFormField(
-        controller: tController,
-        validator: validator,
-        obscureText: shouldHideCharachters,
-        style: const TextStyle(
-          fontSize: 16,
-        ),
-        decoration:  InputDecoration(
-          focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.blueGrey)
-          ),
-          labelStyle: const TextStyle(
-            fontSize: 20,
-            color: Colors.grey
-          ),
-          labelText: label,
-          hintText: hint
-        ),
-      );
-    }
-
-    Widget _button(){
-      return Container(
-        height: 48,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blueGrey
-          ),
-          onPressed: (){
-            _loginTap();
-          },
-          child: 
-            WhiteBoldText(
-              contentText: "Entrar",
-            )
-          ),
-        );
-    }
-
-
-  //HANDLERS
   _loginTap(){
     bool? isFormValid = _formKey.currentState?.validate();
     if (isFormValid != null){
