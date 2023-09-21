@@ -1,15 +1,25 @@
 import 'package:cars/components/app_button.dart';
 import 'package:cars/components/app_text_field.dart';
 import 'package:cars/components/white_bold_text.dart';
+import 'package:cars/pages/home_page.dart';
+import 'package:cars/pages/login_api.dart';
+import 'package:cars/utils/navigator.dart';
 import 'package:flutter/material.dart';
 
-final class LoginPage extends StatelessWidget {
+final class LoginPage extends StatefulWidget {
+
+  const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+
+}
+
+class _LoginPageState extends State<LoginPage> {
 
   final _formKey = GlobalKey<FormState>();
   final tLogin = TextEditingController();
   final tSenha = TextEditingController();
-
-  LoginPage({super.key});
 
   @override
     Widget build(BuildContext context) {
@@ -34,7 +44,7 @@ final class LoginPage extends StatelessWidget {
               shouldHideCharachters: true,
                label: "E-mail", 
                hint: "Digite seu e-mail", 
-               tController: tSenha, 
+               tController: tLogin, 
                validator: (text) {
                   if(text == ""){
                     return "Campo obrigatório.";
@@ -84,7 +94,8 @@ final class LoginPage extends StatelessWidget {
     String login = tLogin.text;
     String password = tSenha.text;
 
-    print("$login e $password");
-  }
+    LoginApi.login(login, password);
 
+    push(context, HomePage());
+  }
 }
