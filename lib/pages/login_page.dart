@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
       return const SizedBox(height: 16);
     }
 
-  _loginTap(){
+  _loginTap() async {
     bool? isFormValid = _formKey.currentState?.validate();
     if (isFormValid != null){
       if (!isFormValid){
@@ -94,8 +94,12 @@ class _LoginPageState extends State<LoginPage> {
     String login = tLogin.text;
     String password = tSenha.text;
 
-    LoginApi.login(login, password);
+    Future<bool> ok = LoginApi.login(login, password);
 
-    push(context, HomePage());
+    if (await ok) {
+       push(context, HomePage());
+    }
+
+   
   }
 }
